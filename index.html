@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - M.A. Engineering Industries</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom styles for the page */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Style for the background image and overlay */
+        .bg-hero {
+            background-image: url('https://images.unsplash.com/photo-1581092921462-6870002a95ea?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        /* Styling for the countdown timer text */
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Main Container -->
+    <div class="relative min-h-screen w-full flex flex-col items-center justify-center bg-hero p-4 sm:p-6 lg:p-8">
+        <!-- Background Overlay -->
+        <div class="absolute inset-0 bg-gray-900 bg-opacity-80 backdrop-blur-sm"></div>
+
+        <!-- Content Wrapper -->
+        <div class="relative z-10 flex flex-col items-center justify-center text-center w-full max-w-4xl mx-auto">
+
+            <!-- Header/Logo -->
+            <header class="mb-8">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">
+                    M.A. ENGINEERING INDUSTRIES
+                </h1>
+                <p class="mt-2 text-lg text-gray-300">Precision Engineering & Fabrication</p>
+            </header>
+
+            <!-- Main Content -->
+            <main class="w-full">
+                <h2 class="text-2xl md:text-3xl font-bold text-cyan-400">Our New Digital Home is Under Construction</h2>
+                <p class="mt-4 max-w-2xl mx-auto text-base md:text-lg text-gray-200">
+                    We're forging a brand new online experience to showcase our innovative solutions in metal fabrication and CNC services. Get ready for something powerful.
+                </p>
+
+                <!-- Countdown Timer -->
+                <div id="countdown-timer" class="flex justify-center gap-4 md:gap-8 my-10 md:my-12">
+                    <div class="text-center bg-gray-800/50 p-4 rounded-lg w-24">
+                        <div id="days" class="text-4xl md:text-5xl font-bold">00</div>
+                        <div class="countdown-label text-gray-400 mt-1">Days</div>
+                    </div>
+                    <div class="text-center bg-gray-800/50 p-4 rounded-lg w-24">
+                        <div id="hours" class="text-4xl md:text-5xl font-bold">00</div>
+                        <div class="countdown-label text-gray-400 mt-1">Hours</div>
+                    </div>
+                    <div class="text-center bg-gray-800/50 p-4 rounded-lg w-24">
+                        <div id="minutes" class="text-4xl md:text-5xl font-bold">00</div>
+                        <div class="countdown-label text-gray-400 mt-1">Minutes</div>
+                    </div>
+                    <div class="text-center bg-gray-800/50 p-4 rounded-lg w-24">
+                        <div id="seconds" class="text-4xl md:text-5xl font-bold">00</div>
+                        <div class="countdown-label text-gray-400 mt-1">Seconds</div>
+                    </div>
+                </div>
+
+                <!-- Notification Form -->
+                <section class="mt-8 w-full max-w-md mx-auto">
+                    <h3 class="text-lg font-semibold">Be the first to know when we launch.</h3>
+                    <form class="mt-4 flex flex-col sm:flex-row gap-3" onsubmit="event.preventDefault(); showMessage();">
+                        <input 
+                            type="email" 
+                            id="email-input"
+                            placeholder="Enter your email address" 
+                            required 
+                            class="w-full px-4 py-3 rounded-md bg-gray-800 border border-gray-700 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-white placeholder-gray-500"
+                        >
+                        <button 
+                            type="submit" 
+                            class="w-full sm:w-auto bg-cyan-600 hover:bg-cyan-700 text-white font-bold py-3 px-6 rounded-md transition-colors duration-300 whitespace-nowrap"
+                        >
+                            Notify Me
+                        </button>
+                    </form>
+                    <p id="success-message" class="mt-4 text-green-400 hidden">Thank you! We'll be in touch.</p>
+                </section>
+            </main>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="absolute bottom-0 left-0 right-0 p-4 text-center text-gray-500 text-sm z-10">
+            &copy; <span id="year"></span> M.A. Engineering Industries | Created by 
+            <a href="https://www.canstart.in/" target="_blank" rel="noopener noreferrer" class="hover:text-cyan-400 underline">Canstart Technologies</a>
+        </footer>
+    </div>
+
+    <script>
+        // --- Countdown Timer Logic ---
+
+        // Set the launch date (e.g., 30 days from now)
+        const launchDate = new Date();
+        launchDate.setDate(launchDate.getDate() + 30);
+        const launchTime = launchDate.getTime();
+
+        // Get elements to display the countdown
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(() => {
+            const now = new Date().getTime();
+            const distance = launchTime - now;
+
+            // Time calculations
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the results, adding a leading zero if the number is less than 10
+            daysEl.textContent = days < 10 ? '0' + days : days;
+            hoursEl.textContent = hours < 10 ? '0' + hours : hours;
+            minutesEl.textContent = minutes < 10 ? '0' + minutes : minutes;
+            secondsEl.textContent = seconds < 10 ? '0' + seconds : seconds;
+
+            // If the countdown is over, display a message
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown-timer').innerHTML = '<div class="text-2xl font-bold text-green-400">Launched!</div>';
+            }
+        }, 1000);
+
+        // --- Form Submission Message ---
+        function showMessage() {
+            const emailInput = document.getElementById('email-input');
+            const successMessage = document.getElementById('success-message');
+            if (emailInput.checkValidity()) {
+                successMessage.classList.remove('hidden');
+                emailInput.value = ''; // Clear the input field
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                }, 5000); // Hide the message after 5 seconds
+            }
+        }
+
+        // --- Dynamic Year for Footer ---
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+</body>
+</html>
